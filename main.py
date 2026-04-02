@@ -1,30 +1,27 @@
-from data import add_game, update_progress . view_library
+from data import add_game, update_progress, view_library
+from export import export_to_csv
 
-APP_NAME = " Game Tracker"
+APP_NAME = "🎮 Game Tracker v2"
 
 def menu():
-    """Главное меню приложения"""
-    print(f"\n{'='*40}")
-    print(f"{APP_NAME}")
-    print(f"{'='*40}")
+    print(f"\n{APP_NAME} | Версия 2.0")
     print("1. Добавить игру")
     print("2. Обновить прогресс")
-    print("3. Выход")
-    print(f"{'='*40}")
-    
-    choice = input("Выберите действие (1-3): ").strip()
-    
+    print("3. Библиотека")
+    print("4. Экспорт в CSV")
+    choice = input("Ваш выбор (1-4): ")
     if choice == "1":
-        add_game_menu()
+        t = input("Название: "); p = input("Платформа: ")
+        print(add_game(t, p))
     elif choice == "2":
-        gid = int(input("ID игры: "))
-        s = input("Статус: "); h = input("Часы: ")
+        gid = int(input("ID: ")); s = input("Статус: "); h = input("Часы: ")
         print(update_progress(gid, s or None, h or None))
     elif choice == "3":
         print(view_library())
+    elif choice == "4":
+        print(export_to_csv())
     else:
-        print("Выход.")
-    
+        print("До свидания.")
 
     menu()
 
