@@ -1,4 +1,4 @@
-from data import add_game, update_progress
+from data import add_game, update_progress . view_library
 
 APP_NAME = " Game Tracker"
 
@@ -17,12 +17,13 @@ def menu():
     if choice == "1":
         add_game_menu()
     elif choice == "2":
-        update_progress_menu()
+        gid = int(input("ID игры: "))
+        s = input("Статус: "); h = input("Часы: ")
+        print(update_progress(gid, s or None, h or None))
     elif choice == "3":
-        print("\n До свидания! Приятной игры!")
-        return
+        print(view_library())
     else:
-        print("\n Неверный выбор. Попробуйте снова.")
+        print("Выход.")
     
 
     menu()

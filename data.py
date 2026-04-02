@@ -45,3 +45,11 @@ def update_progress(game_id, status=None, hours=None):
             return f" Игра '#{game_id}' обновлена: {game['title']} [{game['status']}] - {game['hours']}ч"
     
     return f" Игра с ID {game_id} не найдена"
+    
+def view_library():
+    games = load_games()
+    if not games: return "📭 Библиотека пуста."
+    out = "\n📚 Игры:\n" + "-"*40 + "\n"
+    for g in games:
+        out += f"#{g['id']} {g['title']} [{g['platform']}] | {g['status']} | {g['hours']}ч\n"
+    return out
