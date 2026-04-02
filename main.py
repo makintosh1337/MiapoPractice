@@ -1,6 +1,6 @@
 from data import add_game, update_progress . view_library
 
-APP_NAME = " Game Tracker"
+APP_NAME = " Game Tracker 2"
 
 def menu():
     """Главное меню приложения"""
