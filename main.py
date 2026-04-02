@@ -1,32 +1,15 @@
-from data import add_game, update_progress . view_library
+from data import add_game, update_progress, view_library
+from export import export_to_csv
 
-APP_NAME = " Game Tracker 2"
+APP_NAME = "Game Tracker v2"
 
 def menu():
-    """Главное меню приложения"""
-    print(f"\n{'='*40}")
-    print(f"{APP_NAME}")
-    print(f"{'='*40}")
+    print(f"\n{APP_NAME} | Версия 2.0")
     print("1. Добавить игру")
     print("2. Обновить прогресс")
-    print("3. Выход")
-    print(f"{'='*40}")
-    
-    choice = input("Выберите действие (1-3): ").strip()
-    
-    if choice == "1":
-        add_game_menu()
-    elif choice == "2":
-        gid = int(input("ID игры: "))
-        s = input("Статус: "); h = input("Часы: ")
-        print(update_progress(gid, s or None, h or None))
-    elif choice == "3":
-        print(view_library())
-    else:
-        print("Выход.")
-    
-
-    menu()
+    print("3. Библиотека")
+    print("4. Экспорт в CSV")
+    print("5. Выход")
 
 def add_game_menu():
     """Меню добавления игры"""
@@ -38,8 +21,7 @@ def add_game_menu():
         print(" Название и платформа обязательны!")
         return
     
-    result = add_game(title, platform)
-    print(f"\n{result}")
+    print(add_game(title, platform))
 
 def update_progress_menu():
     """Меню обновления прогресса"""
@@ -53,14 +35,41 @@ def update_progress_menu():
     
     print("\nОставьте поле пустым, если не хотите менять:")
     status = input("Новый статус (playing/completed/dropped): ").strip()
-    hours = input("Время в часах: ").strip()
+    hours_input = input("Время в часах: ").strip()
     
-    if not status and not hours:
+    if not status and not hours_input:
         print(" Нужно указать хотя бы одно значение для обновления!")
         return
     
-    result = update_progress(game_id, status if status else None, hours if hours else None)
-    print(f"\n{result}")
+    hours = None
+    if hours_input:
+        try:
+            hours = int(hours_input)
+        except ValueError:
+            print(" Время должно быть целым числом!")
+            return
+            
+    status_val = status if status else None
+    print(update_progress(game_id, status_val, hours))
+
+def main():
+    while True:
+        menu()
+        choice = input("Ваш выбор (1-5): ").strip()
+        
+        if choice == "1":
+            add_game_menu()
+        elif choice == "2":
+            update_progress_menu()
+        elif choice == "3":
+            print(view_library())
+        elif choice == "4":
+            print(export_to_csv())
+        elif choice == "5":
+            print(" До свидания!")
+            break
+        else:
+            print(" Неверный выбор. Попробуйте снова.")
 
 if __name__ == "__main__":
-    menu()
+    main()
